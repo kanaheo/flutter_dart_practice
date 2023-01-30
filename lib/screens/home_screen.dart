@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:toonflix/models/webtoon_model.dart';
 import 'package:toonflix/services/api_service.dart';
@@ -29,15 +30,20 @@ class HomeScreen extends StatelessWidget {
         builder: (context, snapshot) {
           // snapshot는 future의 상태(로딩인지에러인지등등)
           if (snapshot.hasData) {
-            return ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data!.length,
-              // 밑에 itemBuilder을 이용해서 내가 원할때마다 항목생성(한번에 생성 ㄴ)
-              itemBuilder: ((context, index) {
-                var webtoon = snapshot.data![index];
-                return Text(webtoon.title);
-              }),
-              separatorBuilder: (context, index) => const SizedBox(width: 20),
+            return ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {PointerDeviceKind.mouse},
+              ),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data!.length,
+                // 밑에 itemBuilder을 이용해서 내가 원할때마다 항목생성(한번에 생성 ㄴ)
+                itemBuilder: ((context, index) {
+                  var webtoon = snapshot.data![index];
+                  return Text(webtoon.title);
+                }),
+                separatorBuilder: (context, index) => const SizedBox(width: 20),
+              ),
             );
           }
           return const Center(
