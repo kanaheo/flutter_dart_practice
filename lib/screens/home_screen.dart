@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(
         dragDevices: {PointerDeviceKind.mouse},
       ),
+      // ListView or ListViewBuilder는 최적화가 정말 중요 할 때 사용한다.
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: snapshot.data!.length,
